@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Android 12 以下的云备份规则占位（配合 Manifest 的 fullBackupContent） -->
+<full-backup-content>
+</full-backup-content>

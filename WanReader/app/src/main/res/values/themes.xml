@@ -1,0 +1,8 @@
+<resources>
+    <!-- XML 主题只服务"Compose 接管前"的启动瞬间（窗口背景、状态栏）；页面内主题由 WanReaderTheme 负责 -->
+    <style name="Base.Theme.WanReader" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+    </style>
+
+    <style name="Theme.WanReader" parent="Base.Theme.WanReader" />
+</resources>
