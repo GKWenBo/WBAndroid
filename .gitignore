@@ -12,6 +12,8 @@
 
 # Package Files #
 *.jar
+# 例外：Gradle wrapper 的 jar 必须提交，否则其他机器/CI 无法通过 ./gradlew 自举构建
+!**/gradle/wrapper/gradle-wrapper.jar
 *.war
 *.nar
 *.ear
