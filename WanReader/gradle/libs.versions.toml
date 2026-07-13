@@ -8,6 +8,10 @@ kotlin = "2.3.20"
 composeBom = "2025.06.00"
 coreKtx = "1.10.1"
 material = "1.10.0"
+# S1 新增：DI 与导航（版本于 2026-07-13 联网核实）
+ksp = "2.3.9"          # KSP2：版本已与 Kotlin 解耦；KSP1 不兼容 Kotlin 2.3+/AGP 9+
+hilt = "2.60.1"        # Hilt 2.59 起才支持 AGP 9（配套要求 Gradle 9.1+，本工程 9.4.1 满足）
+hiltNavigationCompose = "1.4.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -23,6 +27,16 @@ androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-toolin
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose" }
 
+# S1 新增：Hilt
+hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
+hilt-android-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
+androidx-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
+# S1 新增：导航与 ViewModel（版本由 Compose BOM 管理）
+androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose" }
+androidx-lifecycle-viewmodel-compose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose" }
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }

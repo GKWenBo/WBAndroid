@@ -4,6 +4,9 @@ plugins {
     // 坑①提醒：不要再加 org.jetbrains.kotlin.android —— AGP 9.2.1 会自动应用，
     // 重复声明报 extension 'kotlin' already registered。
     alias(libs.plugins.kotlin.compose)
+    // S1 新增：KSP 处理 Hilt 注解（必须 KSP，kapt 不兼容 Kotlin 2.3+/AGP 9+）
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.hilt)
 }
 
 android {
@@ -58,5 +61,15 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.activity.compose)
+
+    // S1 新增：导航与 ViewModel（BOM 管理版本）
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+
+    // S1 新增：Hilt —— implementation 是运行时库，ksp 是编译期代码生成器
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.android.compiler)
+    implementation(libs.androidx.hilt.navigation.compose)
+
     debugImplementation(libs.androidx.ui.tooling)
 }
