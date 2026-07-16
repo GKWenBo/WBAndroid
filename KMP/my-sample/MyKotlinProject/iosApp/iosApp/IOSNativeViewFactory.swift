@@ -18,6 +18,6 @@ class IOSNativeViewFactory: NativeViewFactory {
     }
 
     func createComposeInSwiftUIView() -> UIViewController {
-        UIHostingController(rootView: Text("反向嵌套占位"))
+        UIHostingController(rootView: ComposeInSwiftUIDemoView())
     }
 }
