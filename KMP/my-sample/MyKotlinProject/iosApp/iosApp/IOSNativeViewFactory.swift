@@ -6,7 +6,7 @@ import Shared
 /// 本步先用占位视图，后续任务逐个替换成真实的 Map / Web / 图片选择 / 反向嵌套。
 class IOSNativeViewFactory: NativeViewFactory {
     func createMapView(onCoordinatePicked: @escaping (KotlinDouble, KotlinDouble) -> Void) -> UIViewController {
-        UIHostingController(rootView: Text("Map 占位"))
+        UIHostingController(rootView: MapDemoView(onCoordinatePicked: onCoordinatePicked))
     }
 
     func createWebView(urlString: String) -> UIViewController {
