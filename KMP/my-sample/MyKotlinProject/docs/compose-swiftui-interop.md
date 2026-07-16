@@ -166,7 +166,7 @@ private fun decodeImage(bytes: ByteArray): ImageBitmap =
 
 1. **`UIKitViewController` 需要 `@OptIn(ExperimentalForeignApi::class)`**。`SwiftUIDemoGallery.kt` 里 `DemoDetail` 函数上标了 `@OptIn(ExperimentalForeignApi::class)`——这是 Compose Multiplatform 目前还在实验阶段的 iOS 互操作 API，写的时候如果漏标会直接编译报错。
 
-2. **回传会触发重组，重组会重建原生视图**——除非你缓存 factory lambda。`UIKitViewController(factory = ...)` 的 `factory` 参数本质上是"要不要重新创建原生 VC"的判断依据之一；如果每次重组都传入一个新 lambda，地图会因为每次点击都重建而丢失已经放置的标注。`DemoDetail` 用 `remember(kind)` 把 `nativeFactory` 缓存起来，只有 `kind` 变化（切换到另一个示例）才重新构造：
+2. **`factory` lambda 建议自己缓存，别依赖 interop 内部实现**。`UIKitViewController(factory = ...)` 的 `factory` 参数本质上是"要不要重新创建原生 VC"的判断依据之一；`UIKitViewController` 内部虽然会对 factory 做一些 remember，但这属于 interop 实现细节，不宜依赖。为避免依赖 UIKitViewController 内部对 factory 的 remember 细节，稳妥做法是自己用 `remember(kind)` 缓存 factory lambda（回传用的 setter 是稳定的），这样重组时也不会重建原生视图。`DemoDetail` 用 `remember(kind)` 把 `nativeFactory` 缓存起来，只有 `kind` 变化（切换到另一个示例）才重新构造：
 
    ```kotlin
    val nativeFactory: () -> UIViewController = remember(kind) {
@@ -226,7 +226,7 @@ private fun decodeImage(bytes: ByteArray): ImageBitmap =
    - `demoItems` 列表加一条 `DemoItem(title, subtitle, DemoKind.XXX)`；
    - `DemoDetail` 的 `when (kind) { ... }` 加一个分支，调用 `factory.createXxx(...)`。
 
-四步都做完，新示例就会自动出现在列表页，点进去即可交互，不需要改动 `SwiftUIDemoGallery` 之外的 Compose 代码。
+以上三步做完，新示例就会自动出现在列表页，点进去即可交互，不需要改动 `SwiftUIDemoGallery` 之外的 Compose 代码。
 
 ## 6. 文件地图
 

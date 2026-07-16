@@ -88,7 +88,7 @@ private fun DemoList(onSelect: (DemoKind) -> Unit) {
 private fun DemoDetail(kind: DemoKind, factory: NativeViewFactory, onBack: () -> Unit) {
     var coordinate by remember { mutableStateOf<Pair<Double, Double>?>(null) }
     var pickedImage by remember { mutableStateOf<ImageBitmap?>(null) }
-    val title = remember(kind) { demoItems.first { it.kind == kind }.title }
+    val title = remember(kind) { demoItems.firstOrNull { it.kind == kind }?.title ?: kind.name }
 
     // 关键：用 remember(kind) 缓存工厂 lambda，避免回传导致 DemoDetail 重组时
     // 重新创建原生视图（否则地图会因每次点击重建而丢状态）。回传用的 setter 是稳定的。

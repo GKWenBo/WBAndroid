@@ -10,7 +10,8 @@ struct WebView: UIViewRepresentable {
     }
 
     func updateUIView(_ webView: WKWebView, context: Context) {
-        if webView.url != url {
+        // 仅首次加载，避免 SwiftUI 更新时把页内跳转弹回首页
+        if webView.url == nil {
             webView.load(URLRequest(url: url))
         }
     }
