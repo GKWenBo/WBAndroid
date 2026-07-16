@@ -14,7 +14,7 @@ class IOSNativeViewFactory: NativeViewFactory {
     }
 
     func createImagePicker(onImagePicked: @escaping (KotlinByteArray) -> Void) -> UIViewController {
-        UIHostingController(rootView: Text("图片选择占位"))
+        UIHostingController(rootView: ImagePickerDemoView(onImagePicked: onImagePicked))
     }
 
     func createComposeInSwiftUIView() -> UIViewController {
