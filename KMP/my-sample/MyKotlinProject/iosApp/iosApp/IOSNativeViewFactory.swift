@@ -10,7 +10,7 @@ class IOSNativeViewFactory: NativeViewFactory {
     }
 
     func createWebView(urlString: String) -> UIViewController {
-        UIHostingController(rootView: Text("Web 占位：\(urlString)"))
+        UIHostingController(rootView: WebDemoView(urlString: urlString))
     }
 
     func createImagePicker(onImagePicked: @escaping (KotlinByteArray) -> Void) -> UIViewController {
