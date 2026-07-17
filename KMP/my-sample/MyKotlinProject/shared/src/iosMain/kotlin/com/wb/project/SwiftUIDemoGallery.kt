@@ -1,5 +1,9 @@
 package com.wb.project
 
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -40,6 +44,9 @@ import platform.UIKit.UIViewController
 /**
  * 顶层画廊：selectedKind 为 null 显示列表，否则显示全屏 SwiftUI 详情。
  * 这是「不用注释代码、直接交互浏览」的核心：点列表项进详情，点返回回列表。
+ *
+ * 列表 ↔ 详情之间用 AnimatedContent 做 iOS 风格的 push/pop 横向滑动：
+ * 进入详情时新页从右侧滑入、旧页向左滑出；返回时反向，观感与 UINavigationController push 一致。
  */
 @Composable
 fun SwiftUIDemoGallery(factory: NativeViewFactory) {
@@ -51,11 +58,26 @@ fun SwiftUIDemoGallery(factory: NativeViewFactory) {
                 .fillMaxSize()
                 .windowInsetsPadding(WindowInsets.systemBars),
         ) {
-            val current = selectedKind
-            if (current == null) {
-                DemoList(onSelect = { selectedKind = it })
-            } else {
-                DemoDetail(kind = current, factory = factory, onBack = { selectedKind = null })
+            AnimatedContent(
+                targetState = selectedKind,
+                transitionSpec = {
+                    if (targetState != null) {
+                        // push：进入详情，新页从右侧滑入，列表向左滑出
+                        slideInHorizontally { width -> width } togetherWith
+                            slideOutHorizontally { width -> -width }
+                    } else {
+                        // pop：返回列表，列表从左侧滑入，详情向右滑出
+                        slideInHorizontally { width -> -width } togetherWith
+                            slideOutHorizontally { width -> width }
+                    }
+                },
+                label = "demo-nav",
+            ) { kind ->
+                if (kind == null) {
+                    DemoList(onSelect = { selectedKind = it })
+                } else {
+                    DemoDetail(kind = kind, factory = factory, onBack = { selectedKind = null })
+                }
             }
         }
     }
