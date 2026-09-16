@@ -187,12 +187,12 @@ data class AppVersionName(val value: String)
 
 ## 7. 验收 checklist（逐项打勾）
 
-- [ ] Sync 成功（首次会下载 Hilt/KSP 依赖，若慢参考 S0 文档坑②配镜像）
-- [ ] 真机运行：底部三 Tab（首页/广场/我的）可点击切换，选中态高亮为品牌蓝
-- [ ] 首页显示 "WanReader v0.1.0 · Hilt 注入链路已打通"（版本号是运行时从 PackageManager 读的，证明 Module → Repository → ViewModel → UI 全链路真实工作）
-- [ ] 系统切深色模式：主题跟随，且主色调是品牌蓝（对比 S0 的默认紫色系）
-- [ ] 到 `app/build/generated/` 下找到一个 Hilt 生成的 Factory 类，看一眼（§3.4）
-- [ ] 自测：能说出 `@Inject constructor` 和 `@Provides` 分别什么时候用（§3.2 ③④）
+- [x] Sync 成功（首次会下载 Hilt/KSP 依赖，若慢参考 S0 文档坑②配镜像）
+- [x] 真机运行：底部三 Tab（首页/广场/我的）可点击切换，选中态高亮为品牌蓝
+- [x] 首页显示 "WanReader v0.1.0 · Hilt 注入链路已打通"（版本号是运行时从 PackageManager 读的，证明 Module → Repository → ViewModel → UI 全链路真实工作）
+- [x] 系统切深色模式：主题跟随，且主色调是品牌蓝（对比 S0 的默认紫色系）
+- [x] 到 `app/build/generated/` 下找到一个 Hilt 生成的 Factory 类，看一眼（§3.4）
+- [x] 自测：能说出 `@Inject constructor` 和 `@Provides` 分别什么时候用（§3.2 ③④）
 
 验收通过 → 会话里告诉我 → 标记 S1 ✅ → 进入 S2（网络层：Retrofit + OkHttp + kotlinx.serialization + BaseResponse 统一封装，App 第一次拉到玩Android 真实数据）。
 遇到报错 → 完整报错贴回会话，先按 §5 套路自查一遍再看我的排查过程，对照你卡在哪一步。
