@@ -145,6 +145,30 @@ Hilt < 2.59 遇上 AGP 9 的组合问题，或 Gradle < 9.1。对照本课 §4 �
 
 ---
 
+### 5.1 实际踩坑：value class 导致 KSP 非法方法名
+
+报错原文：`[ksp] java.lang.IllegalArgumentException: not a valid name: provideAppVersionName-Nwjfrp0`。
+
+本课最初将版本号包装为 `@JvmInline value class AppVersionName`。Kotlin 会对涉及值类的 JVM 方法进行名称改编（mangling），加上哈希后缀；当前 Hilt/KSP 代码生成链路无法接受这里带连字符的方法名。这发生在编译期，App 尚未启动。
+
+修复：在 `di/AppModule.kt` 删除 `@JvmInline`，将声明改为：
+
+```kotlin
+data class AppVersionName(val value: String)
+```
+
+这样保留独立的依赖类型，`@Provides` 和 Repository 的构造注入无需改动。普通 data class 是 JVM 包装对象，并非 Swift struct；这里选择它是为了代码生成互操作性。仅改提供方法的 Kotlin 名称不能消除值类改编机制。
+
+验证时先运行 `./gradlew :app:kspDebugKotlin`，再运行 `./gradlew :app:assembleDebug`；KSP 成功不代表完整 APK 已构建成功。机制参考：[Kotlin 值类与名称改编](https://kotlinlang.org/docs/inline-classes.html#mangling)。
+
+### 5.2 完整构建暴露的 SDK 版本约束
+
+修复 KSP 后，`:app:checkDebugAarMetadata` 报 AndroidX Hilt 1.4.0 及其引入的 Lifecycle 2.11.0 要求 compileSdk 37，而本工程使用 36.1。现将 AndroidX Hilt 调整为 1.3.0，Dagger Hilt 2.60.1 保持不变；两者属于不同制品，版本号不需要一致。
+
+同时在 Version Catalog 显式声明 Activity Compose 1.8.2、Navigation Compose 2.9.0、Lifecycle 2.9.0。纠正此前注释：这些库不由 Compose BOM 管理；Gradle 仍可能因传递依赖选取更高版本，需要结合依赖图和 AAR 元数据检查。
+
+参考：[AndroidX Hilt 发布说明](https://developer.android.com/jetpack/androidx/releases/hilt)、[Compose BOM 说明](https://developer.android.com/develop/ui/compose/bom)。
+
 ## 6. 导航：Tab 切换三件套
 
 `MainScreen.kt` 里 `navController.navigate(route) { ... }` 的三行配置是企业项目的标准咒语，值得背下来：

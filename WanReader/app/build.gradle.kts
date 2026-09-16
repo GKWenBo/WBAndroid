@@ -62,7 +62,7 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.activity.compose)
 
-    // S1 新增：导航与 ViewModel（BOM 管理版本）
+    // S1 新增：导航与 ViewModel（Version Catalog 独立管理版本）
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
 
