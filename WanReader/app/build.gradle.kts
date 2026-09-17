@@ -4,6 +4,7 @@ plugins {
     // 坑①提醒：不要再加 org.jetbrains.kotlin.android —— AGP 9.2.1 会自动应用，
     // 重复声明报 extension 'kotlin' already registered。
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.kotlin.serialization)
     // S1 新增：KSP 处理 Hilt 注解（必须 KSP，kapt 不兼容 Kotlin 2.3+/AGP 9+）
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
@@ -46,10 +47,20 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 
 dependencies {
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.serialization)
+    implementation(libs.okhttp)
+    implementation(libs.okhttp.logging)
+    implementation(libs.serialization.json)
+    implementation(libs.coroutines.android)
+    implementation(libs.androidx.lifecycle.runtime.compose)
+    testImplementation(libs.junit)
+    testImplementation(libs.mockwebserver)
     implementation(libs.androidx.core.ktx)
     // XML 主题 Theme.Material3.* 的资源提供方（AndroidManifest 引用的主题定义在它里面）
     implementation(libs.material)

@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Manifest：App 的"身份证 + 权限清单 + 组件注册表"。iOS 对照：Info.plist（但组件必须显式注册） -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 普通权限，无需像相机/定位那样运行时弹窗申请。 -->
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".WanApp"
+        android:usesCleartextTraffic="false"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
