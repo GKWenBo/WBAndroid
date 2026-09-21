@@ -12,5 +12,18 @@
     否则 DayNight 深色模式不跟随，页面间表现不一致。
 - 页面跳转用显式 Intent：`Intent(this, XxxActivity::class.java)` + `startActivity(intent)`；
   Kotlin 里**不能**写 `setClass(A, B)`（类名不是表达式，会报 "does not have a companion object"）。
+- **统一 Activity 模板**：`private lateinit var binding: XxxBinding` → `enableEdgeToEdge()` →
+  `binding = XxxBinding.inflate(layoutInflater)` → `setContentView(binding.root)` →
+  `ViewCompat.setOnApplyWindowInsetsListener(binding.root)` 设置 `screen_padding + systemBars`。
+  新页面照抄 `MainActivity2` 即可，不要用 `findViewById`。
+- 调试注意：Manifest 里 `exported=false` 的 Activity，`adb shell am start`（含 `run-as`）会被
+  ActivityManagerService 拒绝，属正常行为；实测需先在 UI 上接入口。
 - 验证命令：`./gradlew :app:assembleDebug`；发布级：`./gradlew :app:build`（含 lint + 单测 + release）。
 - 运行验证：模拟器 `emulator-5554`（Pixel_10_Pro / API 37.1）。
+
+## Git
+
+- **仓库根是 `/Users/wenbo/Desktop/WBAndroid`**，里面还有 `Compose/bi_demo1`、`Demo/demo_05` 等其它练习项目。
+  提交时必须限定 pathspec：`git commit -m "..." -- Demo/bilibili_demo1`，否则会把别的项目一起提交进去。
+- `local.properties`、`/build`、`.idea/workspace.xml` 等已被 `.gitignore` 排除；`.idea/gradle.xml`、
+  `.idea/misc.xml` 等按 Android Studio 默认模板**是纳入版本管理的**，提交时保留即可。
