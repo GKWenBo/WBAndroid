@@ -29,3 +29,6 @@ hs_err_pid*
 
 # Kotlin Gradle 插件的编译会话产物
 **/.kotlin/
+
+# 废弃目录：只有 Android Studio 生成的 .idea，从未创建实际源码
+Compose/bi_demo1/
