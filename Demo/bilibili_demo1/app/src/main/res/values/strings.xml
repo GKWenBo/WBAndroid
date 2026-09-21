@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">bilibili_demo1</string>
+    <string name="greeting">Hello Android!</string>
+    <string name="greeting_subtitle">这是用 XML 布局写的界面</string>
+    <string name="action_click_me">点我一下</string>
+    <string name="action_clicked">你点了按钮 👋</string>
+    <string name="my_first_page">我创建的第一个安卓页面</string>
+    <string name="jump">跳转</string>
+</resources>
