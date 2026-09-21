@@ -34,6 +34,7 @@
   和 `**/.kotlin/`（Kotlin 编译会话产物）。提交本项目**无需再手工排除截图**。
 - 同仓其它项目的 `.idea` 改动常会一起被 `git add` 进来。提交前先看
   `git status --short` 有没有串项目，再用 pathspec 限定。
-  - `Compose/bi_demo1/` 是**空壳目录**（只有 `.idea`，无任何源码），不要提交。
+  - `Compose/bi_demo1/` 是**空壳目录**（只有 `.idea`，无任何源码），已在根 `.gitignore` 排除。
+    但它**会反复被重新加进暂存区**（Studio 或 `git add -A`），注意别再提交。
   - `Demo/demo_05` 的 `workspace.xml` 已被它自己的 `.gitignore` 排除，不会进暂存区；
     其余 `.idea/*.xml`（gradle.xml / misc.xml 等）按 Studio 默认模板正常入库。
