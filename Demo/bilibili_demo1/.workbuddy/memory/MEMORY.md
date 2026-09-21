@@ -18,6 +18,9 @@
   新页面照抄 `MainActivity2` 即可，不要用 `findViewById`。
 - 调试注意：Manifest 里 `exported=false` 的 Activity，`adb shell am start`（含 `run-as`）会被
   ActivityManagerService 拒绝，属正常行为；实测需先在 UI 上接入口。
+- **特例**：演示 margin/padding 的页面（如 `MarginActivity`）insets 不能直接用 `screen_padding`，
+  要先记录 XML 里写死的基础 padding 再叠加 systemBars，否则 XML 的 padding 会被 `setPadding` 覆盖、
+  演示内容消失。
 - 验证命令：`./gradlew :app:assembleDebug`；发布级：`./gradlew :app:build`（含 lint + 单测 + release）。
 - 运行验证：模拟器 `emulator-5554`（Pixel_10_Pro / API 37.1）。
 
@@ -27,3 +30,5 @@
   提交时必须限定 pathspec：`git commit -m "..." -- Demo/bilibili_demo1`，否则会把别的项目一起提交进去。
 - `local.properties`、`/build`、`.idea/workspace.xml` 等已被 `.gitignore` 排除；`.idea/gradle.xml`、
   `.idea/misc.xml` 等按 Android Studio 默认模板**是纳入版本管理的**，提交时保留即可。
+- 根 `.gitignore` 已加 `**/.workbuddy/*.png`（验证截图不入库，但 `.workbuddy/memory/*.md` 要提交）
+  和 `**/.kotlin/`（Kotlin 编译会话产物）。提交本项目**无需再手工排除截图**。
