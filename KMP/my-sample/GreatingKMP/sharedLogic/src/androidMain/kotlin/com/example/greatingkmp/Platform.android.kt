@@ -9,3 +9,5 @@ class AndroidPlatform : Platform {
 actual fun getPlatform(): Platform = AndroidPlatform()
 
 actual val num: Int = 2
+
+actual fun platformTag(): String = "A-${Build.VERSION.SDK_INT}"

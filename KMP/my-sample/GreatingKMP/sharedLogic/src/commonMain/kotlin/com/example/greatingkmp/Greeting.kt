@@ -18,5 +18,7 @@ class Greeting {
         delay(1.seconds)
         emit(daysPhrase())
         emit(rocketComponent.launchPhrase())
+        delay(1.seconds)
+        emit(platformTag())
     }
 }

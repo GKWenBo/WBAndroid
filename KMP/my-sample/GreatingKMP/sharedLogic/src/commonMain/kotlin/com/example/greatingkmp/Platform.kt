@@ -7,3 +7,5 @@ interface Platform {
 expect fun getPlatform(): Platform
 
 expect val num: Int
+
+expect fun platformTag(): String
